@@ -1,4 +1,4 @@
-# A demo of dwgLASSO to prioritize metabolite list based on INDEED
+# A demo of INDEED to prioritize metabolite list based on INDEED
 #
 # Reference:
 # [1] Zuo, Yiming, Yi Cui, Cristina Di Poto, Rency S. Varghese, Guoqiang Yu, Ruijiang Li, and 
@@ -97,7 +97,7 @@ pc_HCC[1:10,1:10]
 rm(pre_HCC, thres)
 
 ## Build differential networks
-diff <- pc_CIRR - pc_HCC
+diff <- pc_HCC - pc_CIRR # from CIRR to HCC
 thres = 1e-3
 sum(abs(diff) > thres)
 diff[1:10, 1:10]
@@ -119,17 +119,21 @@ rm(thres_left, thres_right)
 # get binary matrix
 pc_thres_p <- pc_thres$positive
 pc_thres_n <- pc_thres$negative
-pc_binary <- matrix(0, p, p)
+pc_binary <- matrix(0, p, p) # binary connection
 pc_binary[diff < pc_thres_n] <- -1
 pc_binary[diff > pc_thres_p] <- 1
+pc_weight <- matrix(0, p, p) # weight connection
+pc_weight[diff < pc_thres_n] <- diff[diff < pc_thres_n] 
+pc_weight[diff > pc_thres_p] <- diff[diff > pc_thres_p] 
 sum(diff < pc_thres_n)
 sum(diff > pc_thres_p)
 pc_binary[1:10, 1:10]
+pc_weight[1:10, 1:10]
 rowSums(abs(pc_binary)) # node degree for differential networks
 rm(diff_p)
 
 ## Convert adjacent matrix into edge list
-edge <- matrix(0, (sum(diff < pc_thres_n) + sum(diff > pc_thres_p)) / 2, 3)
+edge <- matrix(0, (sum(diff < pc_thres_n) + sum(diff > pc_thres_p)) / 2, 4)
 k <- 1
 for(i in 1:(nrow(pc_binary) - 1)){
     for (j in (i + 1) : nrow(pc_binary)){
@@ -137,13 +141,14 @@ for(i in 1:(nrow(pc_binary) - 1)){
             edge[k, 1] <- i
             edge[k, 2] <- j
             edge[k, 3] <- pc_binary[i, j]
+            edge[k, 4] <- pc_weight[i, j]
             k <- k + 1
         }
     }
 }
-edge_dn <- data.frame("Met1" = edge[, 1], "Met2" = edge[, 2], "Weight" = edge[, 3])
+edge_dn <- data.frame("Met1" = edge[, 1], "Met2" = edge[, 2], "Binary" = edge[, 3], "Weight" = edge[, 4])
 write.csv(edge_dn, file = "Met_dn.csv", quote = F, row.names = F)
-rm(i, j, k, edge, edge_dn, pc_thres, rho_CIRR_opt, rho_HCC_opt, thres)
+rm(i, j, k, edge, edge_dn , pc_thres, rho_CIRR_opt, rho_HCC_opt, thres)
 
 ## Load in the significant list
 sig_l <- read.table("Data/pvalue_M_GU.csv", header = TRUE, sep = ",", stringsAsFactors = F)

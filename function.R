@@ -82,7 +82,7 @@ permutation <- function(m, p, n_CIRR, n_HCC, data_CIRR, data_HCC, rho_CIRR_opt, 
         per_HCC <- glasso(var(data_HCC_p), rho = rho_HCC_opt)
         pc_CIRR_p <- compute_par(per_CIRR$wi)
         pc_HCC_p <- compute_par(per_HCC$wi)
-        diff_p[t, , ] <- pc_CIRR_p - pc_HCC_p
+        diff_p[t, , ] <- pc_HCC_p - pc_CIRR_p
         # update progress bar
         setTxtProgressBar(pb, t)
     } 
