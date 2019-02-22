@@ -1,6 +1,6 @@
-# INDEED R package
+# INDEED R codes
 
-This package implements INDEED algorithm from Zuo *et*. *al*.'s Methods paper: **INDEED: Integrated differential expression and differential network analysis of omic data for biomarker discovery** (PMID: 27592383). It contains one demo (i.e., **demo.R** and files in Data folder) and one **function.R**. 
+These R codes implement INDEED algorithm from Zuo *et*. *al*.'s Methods paper: **INDEED: Integrated differential expression and differential network analysis of omic data for biomarker discovery** (PMID: 27592383). It contains one demo (i.e., **demo.R** and files in Data folder) and one **function.R**. 
 
 ## Update
 
