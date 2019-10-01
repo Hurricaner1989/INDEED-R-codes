@@ -13,4 +13,4 @@ I submit version 1.0 which contains one demo (i.e., **demo.R** and files in Data
 
 ### 09/30/2019
 
-We now have a ready-to-install INDEED R package [here](https://github.com/ressomlab/INDEED) thanks to the Ressom Lab team-members. This R package will be actively updated and maintained. Please download and test it if you are interested. In the meantime, I will keep this INDEED-R-codes repository open in case there're readers want to reproduce my work in the Methods paper.
+We now have a ready-to-install INDEED R package [here](https://github.com/ressomlab/INDEED), thanks to the **Ressom Lab** team-members. This R package will be actively updated and maintained. Please download and test it if you are interested. In the meantime, I will keep this INDEED-R-codes repository open in case there're readers want to reproduce my work in the Methods paper.
